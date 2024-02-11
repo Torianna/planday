@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import tilesData from '../../gridTilesData.json'
-import {Card, CardContent, CardMedia, Container, Pagination, Typography} from "@mui/material";
+import {Card, CardActionArea, CardContent, CardMedia, Container, Pagination, Typography} from "@mui/material";
 import {SearchBar} from "../SearchBar/SearchBar";
 import {useState} from "react";
 
@@ -21,8 +21,8 @@ export const GridList = () => {
             <Grid container rowSpacing={6} columnSpacing={{xs: 1, sm: 2, md: 3}}
                   style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <Grid xs={12} justifyContent={'center'} sx={{display: "flex"}}>
-                    <Typography align={'center'} variant="h2" component="h3">
-                        Fun Tiles {page}
+                    <Typography  align={'center'} variant="h2" component="h3">
+                        Fun Tiles
                     </Typography>
                 </Grid>
                 <Grid xs={12} justifyContent={'center'} sx={{display: "flex"}}>
@@ -34,6 +34,7 @@ export const GridList = () => {
                             <>
                                 <Grid xs={4}>
                                     <Card sx={{maxWidth: 345}}>
+                                        <CardActionArea>
                                         <CardMedia
                                             component="img"
                                             alt="green iguana"
@@ -48,6 +49,7 @@ export const GridList = () => {
                                                 {value.description}
                                             </Typography>
                                         </CardContent>
+                                        </CardActionArea>
                                     </Card>
                                 </Grid>
                             </>
