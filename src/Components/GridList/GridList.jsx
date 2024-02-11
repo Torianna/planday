@@ -1,17 +1,25 @@
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import tilesData from '../../gridTilesData.json'
-import {Card, CardActionArea, CardContent, CardMedia, Container, Pagination, Typography} from "@mui/material";
+import {Button, Card, CardActionArea, CardContent, CardMedia, Container, Pagination, Typography} from "@mui/material";
 import {SearchBar} from "../SearchBar/SearchBar";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {AddModal} from "../AddModal/AddModal";
 
 const pageSize = 6
 
 export const GridList = () => {
-    const [foundData, setFoundData] = useState(tilesData)
+    const [allTiles, setAllTiles] = useState(tilesData)
+    const [foundData, setFoundData] = useState(allTiles)
+    const [searchValue, setSearchValue] = useState('')
+    const [openModal, setOpenModal] = useState(false)
     const [page, setPage] = useState(1)
 
-    const handleSearch = (searchValue) => {
-        setFoundData(tilesData.filter((tile) => tile.title.toUpperCase().includes(searchValue.toUpperCase())))
+    useEffect(() => {
+        setFoundData(allTiles.filter((tile) => tile.title.toUpperCase().includes(searchValue.toUpperCase())))
+    }, [allTiles, searchValue])
+
+    const handleAddTile = (tile) => {
+        setAllTiles(state => state.concat(tile))
     }
 
     const tiles = foundData.slice((page - 1) * pageSize, page * pageSize)
@@ -25,14 +33,14 @@ export const GridList = () => {
                         Fun Tiles
                     </Typography>
                 </Grid>
-                <Grid xs={12} justifyContent={'center'} sx={{display: "flex"}}>
-                    <SearchBar handleSearch={handleSearch}/>
+                <Grid xs={12} justifyContent={'center'} sx={{display: "flex"}} columnGap={{xs: 1, sm: 2, md: 3}}>
+                    <SearchBar handleSearch={(searchValue => setSearchValue(searchValue))}/>
+                    <Button variant={'contained'} onClick={()=>setOpenModal(true)}>Add Tile</Button>
                 </Grid>
-
-                {tiles.length > 1 ? <>
+                {tiles.length > 0 ? <>
                         {tiles.map(value =>
                             <>
-                                <Grid xs={4}>
+                                <Grid xs={12} sm={6} md={4}>
                                     <Card sx={{maxWidth: 345}}>
                                         <CardActionArea>
                                         <CardMedia
@@ -63,9 +71,8 @@ export const GridList = () => {
                         No results found...
                     </Typography>
                 }
+                <AddModal open={openModal} onClose={()=> setOpenModal(false)} onAddTile={handleAddTile}/>
             </Grid>
-
         </Container>
-
     )
 }
