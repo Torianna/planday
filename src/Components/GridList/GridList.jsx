@@ -4,9 +4,10 @@ import {Card, CardContent, CardMedia, Container, Pagination, Typography} from "@
 import {SearchBar} from "../SearchBar/SearchBar";
 import {useState} from "react";
 
+const pageSize = 6
+
 export const GridList = () => {
     const [foundData, setFoundData] = useState(tilesData)
-    const pageSize = 6
     const [page, setPage] = useState(1)
 
     const handleSearch = (searchValue) => {
