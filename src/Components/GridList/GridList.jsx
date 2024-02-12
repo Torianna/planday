@@ -16,6 +16,7 @@ export const GridList = () => {
 
     useEffect(() => {
         setFoundData(allTiles.filter((tile) => tile.title.toUpperCase().includes(searchValue.toUpperCase())))
+        setPage(1)
     }, [allTiles, searchValue])
 
     const handleAddTile = (tile) => {
